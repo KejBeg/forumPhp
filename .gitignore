@@ -1,0 +1,10 @@
+# Folders
+.git/
+.vscode/
+.vendor/
+
+# Dotenv
+.env
+
+# Useless files
+*.session.sql
