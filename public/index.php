@@ -1,21 +1,15 @@
 <?php
-// Simple router logic
+require_once __DIR__ . '/../app/bootstrap.php';
 
 // Get the current request URI
 $request = $_SERVER['REQUEST_URI'];
 
-// Define routes
 if ($request == '/') {
-    // Show homepage
-	echo 'home';
-} elseif ($request == '/about') {
-    // Show about page
-	echo 'about';
-} elseif ($request == '/contact') {
-    // Show contact page
-	echo 'contact';
+	require VIEWS . '/index.php';
+} else if ($request = '/login') {
+	require VIEWS . '/login.php';
+} else if ($request = '/register') {
+	require VIEWS . '/register.php';
 } else {
-    // 404 Not Found
 	echo '404';
 }
-?>

@@ -1,13 +1,13 @@
-<nav class="navbar">
+<nav class='navbar'>
 	<ul>
 		<li>
-			<a href="/">Home</a>
+			<a href='/'>Home</a>
 		</li>
 		<li>
-			<a href="/login.php">Login</a>
+			<a href='/login.php'>Login</a>
 		</li>
 		<li>
-			<a href="/register.php">Register</a>
+			<a href='/register.php'>Register</a>
 		</li>
 	</ul>
 </nav>
