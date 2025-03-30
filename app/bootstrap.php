@@ -8,7 +8,7 @@ define('ASSETS', PUBLIC_DIR . '/assets');
 
 // App
 define('APP', ROOT . '/app');
-define('CONTROLLER', APP . '/Controller');
+define('CONTROLLERS', APP . '/Controllers');
 define('MODELS', APP . '/Models');
 define('VIEWS', APP . '/Views');
 define('COMPONENTS', VIEWS . '/components');
