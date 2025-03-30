@@ -6,7 +6,7 @@
 		"process-timeout": 900
 	},
 	"scripts": {
-		"start": "php -S localhost:8000 public/index.php"
+		"start": "php app/setup.php && php -S localhost:8000 public/index.php"
 	}
 }
 

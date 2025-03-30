@@ -1,6 +1,11 @@
 <?php
 require_once __DIR__ . '/../app/bootstrap.php';
 
+require MODELS . "/database.php";
+
+$db = new Database();
+$conn = $db->getConn();
+
 // Get the current request URI
 $request = $_SERVER['REQUEST_URI'];
 
@@ -13,3 +18,5 @@ if ($request == '/') {
 } else {
 	echo '404';
 }
+
+$conn->close();
