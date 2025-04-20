@@ -4,10 +4,10 @@
 			<a href='/'>Home</a>
 		</li>
 		<li>
-			<a href='/login.php'>Login</a>
+			<a href='/login'>Login</a>
 		</li>
 		<li>
-			<a href='/register.php'>Register</a>
+			<a href='/register'>Register</a>
 		</li>
 	</ul>
 </nav>

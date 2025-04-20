@@ -8,10 +8,14 @@ define('ASSETS', PUBLIC_DIR . '/assets');
 
 // App
 define('APP', ROOT . '/app');
+define('UTILS', APP . '/Utils');
 define('CONTROLLERS', APP . '/Controllers');
 define('MODELS', APP . '/Models');
 define('VIEWS', APP . '/Views');
 define('COMPONENTS', VIEWS . '/components');
+
+define("API", CONTROLLERS . '/Api');
+define("USER_MANAGEMENT",  API . '/UserManagement');
 
 define('GENDERS', ['male', 'female']);
 

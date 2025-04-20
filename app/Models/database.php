@@ -13,8 +13,6 @@ class Database
 		}
 	}
 
-
-
 	public function getConn()
 	{
 		if ($this->conn == null) {
