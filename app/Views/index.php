@@ -7,4 +7,6 @@ $title = $_SERVER['APP_NAME'];
 
 <?php require COMPONENTS . '/navbar.php' ?>
 
+<?php require COMPONENTS . '/error.php' ?>
+
 <?php require COMPONENTS . '/foot.php' ?>
