@@ -3,6 +3,11 @@ require_once 'bootstrap.php';
 
 require MODELS . "/database.php";
 
+require UTILS . '/LogHandler.php';
+
+$logger = new LogHandler(LOG_FILE_PATH);
+$logger->info("Starting Setup");
+
 $db = new Database();
 
 $conn = $db->getConn();
@@ -67,5 +72,10 @@ $conn->query($users);
 $conn->query($categories);
 $conn->query($posts);
 $conn->query($messages);
+
+$logger->info("Database tables created");
+
+
+$logger->info("Setup finished");
 
 $conn->close();

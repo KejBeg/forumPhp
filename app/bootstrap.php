@@ -1,25 +1,30 @@
 <?php
 // Constants
-define('ROOT', __DIR__ . '/../');
+const ROOT = __DIR__ . '/../';
 
 // Public
-define('PUBLIC_DIR', ROOT . '/public');
-define('ASSETS', PUBLIC_DIR . '/assets');
+const PUBLIC_DIR = ROOT . '/public';
+const ASSETS = PUBLIC_DIR . '/assets';
 
 // App
-define('APP', ROOT . '/app');
-define('UTILS', APP . '/Utils');
-define('CONTROLLERS', APP . '/Controllers');
-define('MODELS', APP . '/Models');
-define('VIEWS', APP . '/Views');
-define('COMPONENTS', VIEWS . '/components');
+const APP = ROOT . '/app';
+const UTILS = APP . '/Utils';
+const CONTROLLERS = APP . '/Controllers';
+const MODELS = APP . '/Models';
+const VIEWS = APP . '/Views';
+const COMPONENTS = VIEWS . '/components';
 
-define("API", CONTROLLERS . '/Api');
-define("USER_MANAGEMENT",  API . '/UserManagement');
+const API = CONTROLLERS . '/Api';
+const USER_MANAGEMENT = API . '/UserManagement';
 
-define('GENDERS', ['male', 'female']);
+// Logger
+const LOG_FILE_DIR = ROOT;
+const LOG_FILE_NAME = 'forumPhp.log';
+const LOG_FILE_PATH = LOG_FILE_DIR . '/' . LOG_FILE_NAME;
 
-// Load  the composer
+const GENDERS = ['male', 'female'];
+
+// Load the composer
 require ROOT . '/vendor/autoload.php';
 
 // Load dotenv

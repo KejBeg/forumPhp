@@ -8,3 +8,6 @@ vendor/
 
 # Useless files
 *.session.sql
+
+# Log
+forumPhp.log
