@@ -1,8 +1,12 @@
 <?php
 require_once __DIR__ . '/../app/bootstrap.php';
 
-require MODELS . "/database.php";
+require UTILS . 'LogHandler.php';
 
+$logger = new LogHandler(LOG_FILE_PATH);
+$logger->log("Test");
+
+require MODELS . "/database.php";
 
 // Get the current request URI
 $request = $_SERVER['REQUEST_URI'];
