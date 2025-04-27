@@ -2,10 +2,16 @@
 class User
 {
 	private mysqli $dbCon;
+	/**
+	 * @var LogHandler $logger
+	 * A logger instance used for handling logging operations within the ResponseHandler utility.
+	 */
+	private LogHandler $logger;
 
-	public function __construct(mysqli $dbCon)
+	public function __construct(mysqli $dbCon, LogHandler $logger)
 	{
 		$this->dbCon = $dbCon;
+		$this->logger = $logger;
 	}
 
 	public function hashPassword(string $password)
