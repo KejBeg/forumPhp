@@ -6,7 +6,7 @@
 		"process-timeout": 3600
 	},
 	"scripts": {
-		"start": "./start.sh"
+		"start": "sh start.sh"
 	}
 }
 

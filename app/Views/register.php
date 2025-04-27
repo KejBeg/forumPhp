@@ -22,7 +22,7 @@ $title = $_SERVER['APP_NAME'];
 	<input type='submit' value='Register' name='register'>
 </form>
 <script type="module">
-	import ApiHandler from '/js/ApiHandler.js';
+	import ApiHandler from '/public/js/ApiHandler.js';
 
 	document.querySelector('#register-form').addEventListener('submit', (e) => {
 		e.preventDefault();

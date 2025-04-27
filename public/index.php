@@ -1,42 +1,47 @@
 <?php
+
+/**
+ * Entry point for the server-side application.
+ * This script initializes the application, handles routing
+ */
+
+// Includes basic constants
 require_once __DIR__ . '/../app/bootstrap.php';
 
-require UTILS . 'LogHandler.php';
+// Includes LogHandler Class
+require_once UTILS . '/LogHandler.php';
 
+// Sets log system
+/**
+ * LogHandler object
+ * @var LogHandler
+ */
 $logger = new LogHandler(LOG_FILE_PATH);
-$logger->log("Test");
+$logger->info("Server Started");
 
+// Include database model
 require MODELS . "/database.php";
 
-// Get the current request URI
-$request = $_SERVER['REQUEST_URI'];
-$publicRequestPath = PUBLIC_DIR . $request;
+/**
+ * @var string
+ * Request URI
+ */
+$request = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
-if (file_exists($publicRequestPath) && is_file($publicRequestPath)) {
-	// Serve the file with the correct MIME type
-	$extension = pathinfo($publicRequestPath, PATHINFO_EXTENSION);
-	$mimeTypes = [
-		'js' => 'application/javascript',
-		'css' => 'text/css',
-		'html' => 'text/html',
-		'json' => 'application/json',
-		'png' => 'image/png',
-		'jpg' => 'image/jpeg',
-		'gif' => 'image/gif',
-	];
-
-	if (isset($mimeTypes[$extension])) {
-		header("Content-Type: " . $mimeTypes[$extension]);
-	}
-
-	readfile($publicRequestPath);
-	exit;
-}
-
+// Create a new database connection
+/**
+ * Database object
+ * @var Database
+ */
 $db = new Database();
+/**
+ * Database connection
+ * @var mysqli
+ */
 $conn = $db->getConn();
 
-
+// Redirects all future duties to the Router
 require CONTROLLERS . '/Router.php';
 
+// Closes db connection
 $conn->close();

@@ -1,16 +1,33 @@
 <?php
-header('Content-Type: application/json');
+
+/**
+ * RegisterController
+ *
+ * This controller handles the user registration process for the API.
+ * It is part of the UserManagement module within the forumPhp application.
+ *
+ *
+ * Responsibilities:
+ * - Handles incoming registration requests.
+ * - Validates user input data.
+ * - Creates new user accounts in the system.
+ * - Returns appropriate API responses.
+ *
+ * Usage:
+ * This controller is accessed via API routes for user registration.
+ */
 
 
+// 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-	echo json_encode(ERROR_REQUEST_METHOD_POST);
-	return;
+	$responseHandler->incorrectMethod(HttpMethod::POST);
+	exit;
 }
 
 
 if (empty($_POST['email']) || empty($_POST['name']) || empty($_POST['pass']) || empty($_POST['gender'])) {
-	echo json_encode(ERROR_INSUFICIENT_INPUTS);
-	return;
+	$responseHandler->insufficientInput();
+	exit;
 }
 
 
@@ -24,25 +41,28 @@ if (!in_array($gender, GENDERS)) {
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-	echo json_encode(ERROR_MAIL_FORMAT);
+	$responseHandler->incorrectMailFormat();
+	exit;
 }
 
 if (!preg_match('/^[a-zA-Z0-9_-]{3,20}$/', $name)) {
-	// Should say wrong username 
-	echo json_encode(ERROR_USERNAME_FORMAT);
+	$responseHandler->incorrectUsernameFormat();
+	exit;
 }
 
 if (!preg_match('/^[a-zA-Z0-9_!@#$%^&*()\-]{8,}$/', $pass)) {
-	echo json_encode(ERROR_PASSWORD_FORMAT);
+	$responseHandler->incorrectPasswordFormat();
+	exit;
 }
 require MODELS . '/UserModel.php';
 
-$user = new User($conn);
+$user = new User($conn, logger: $logger);
 try {
 	$user->createUser($name, $pass, $email, $gender);
 } catch (Exception $e) {
-	echo json_encode(ERROR_DATABASE);
-	return;
+	$responseHandler->databaseError();
+	exit;
 }
 
-echo json_encode(SUCCESS);
+$responseHandler->userCreated();
+exit;
