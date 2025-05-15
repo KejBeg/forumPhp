@@ -5,10 +5,10 @@ require MODELS . "/database.php";
 
 require UTILS . '/LogHandler.php';
 
-$logger = new LogHandler(LOG_FILE_PATH);
+$logger = LogHandler::getInstance();
 $logger->info("Starting Setup");
 
-$db = new Database();
+$db = Database::getInstance();
 
 $conn = $db->getConn();
 
@@ -78,4 +78,3 @@ $logger->info("Database tables created");
 
 $logger->info("Setup finished");
 
-$conn->close();

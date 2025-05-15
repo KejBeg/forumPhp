@@ -1,24 +1,37 @@
 <?php
 class Database
 {
-	private ?mysqli $conn = null;
+	private static ?Database $instance = null;
+	private ?PDO $conn = null;
 
-	function __construct()
+	private function __construct()
 	{
 		try {
+			$dsn = "mysql:host={$_SERVER['DB_HOST']};port={$_SERVER['DB_PORT']};dbname={$_SERVER['DB_DATABASE']};charset=utf8mb4";
 
-			$this->conn = new mysqli($_SERVER["DB_HOST"], $_SERVER["DB_USER"], $_SERVER["DB_PASS"], $_SERVER["DB_DATABASE"], $_SERVER["DB_PORT"]);
-		} catch (mysqli_sql_exception $error) {
+			$this->conn = new PDO(
+				$dsn,
+				username: $_SERVER['DB_USER'],
+				password: $_SERVER['DB_PASS']
+
+			);
+
+			$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		} catch (PDOException $error) {
 			die("Database connection could not be created \n Error: $error");
 		}
 	}
 
-	public function getConn()
+	public static function getInstance(): Database
 	{
-		if ($this->conn == null) {
-			new Database();
+		if (self::$instance === null) {
+			self::$instance = new Database();
 		}
+		return self::$instance;
+	}
 
+	public function getConn(): PDO
+	{
 		return $this->conn;
 	}
 }

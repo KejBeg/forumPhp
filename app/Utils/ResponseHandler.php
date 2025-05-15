@@ -1,26 +1,12 @@
 <?php
 
 require_once UTILS . "/LogHandler.php";
+require_once UTILS . '/HttpMethod.php';
+
 const CURRENT_CALLER_INDEX = 2;
 
 /**
- * Enum HttpMethod
- *
- * Represents the HTTP methods as string values.
- * This can be used to standardize and validate HTTP method usage
- * throughout the application.
- *
- */
-enum HttpMethod: string
-{
-	case GET = 'GET';
-	case POST = 'POST';
-	case PUT = 'PUT';
-	case DELETE = 'DELETE';
-}
-
-/**
- * Class ResponseHandler
+ * Class BaseResponseHandler
  *
  * This class is responsible for handling and formatting responses
  * within the application. It provides utility methods to standardize
@@ -28,7 +14,7 @@ enum HttpMethod: string
  *
  * @package App\Utils
  */
-class ResponseHandler
+class BaseResponseHandler
 {
 	/**
 	 * @var array $data
@@ -49,19 +35,19 @@ class ResponseHandler
 
 	/**
 	 * @var LogHandler $logger
-	 * A logger instance used for handling logging operations within the ResponseHandler utility.
+	 * A logger instance used for handling logging operations within the BaseResponseHandler utility.
 	 */
 	public LogHandler $logger;
 
 
 	/**
-	 * Constructor for the ResponseHandler class.
+	 * Constructor for the BaseResponseHandler class.
 	 *
 	 * @param LogHandler $logger An instance of LogHandler for logging purposes.
 	 */
-	public function __construct(LogHandler $logger)
+	public function __construct()
 	{
-		$this->logger = $logger;
+		$this->logger = LogHandler::getInstance();
 	}
 
 	/**
@@ -100,7 +86,6 @@ class ResponseHandler
 
 		if ($json === false) {
 			http_response_code(500);
-			echo json_encode(['message' => 'Failed to encode response']);
 			$this->logger->info("Encoding a response failed", callerIndex: CURRENT_CALLER_INDEX);
 		} else {
 			echo $json;
@@ -140,7 +125,7 @@ trait GenericResponseHandler
 	 */
 	public function insufficientInput(): void
 	{
-		$this->logger->info('Sending "Insufficeint input" response', callerIndex: CURRENT_CALLER_INDEX);
+		$this->logger->info('Sending "Insufficient input" response', callerIndex: CURRENT_CALLER_INDEX);
 		$this->setResponseData(['message' => "Required data was not sent"], false, 400);
 		$this->sendResponse();
 	}
@@ -154,6 +139,13 @@ trait GenericResponseHandler
 	{
 		$this->logger->info('Sending "Database error" response', callerIndex: CURRENT_CALLER_INDEX);
 		$this->setResponseData(['message' => "A database error occured"], false, 500);
+		$this->sendResponse();
+	}
+
+	public function serverError(): void
+	{
+		$this->logger->info('Sending "Server error" response', callerIndex: CURRENT_CALLER_INDEX);
+		$this->setResponseData(['message' => "A server error occured"], false, 500);
 		$this->sendResponse();
 	}
 }
@@ -178,6 +170,13 @@ trait UserManagementResponseHandler
 	{
 		$this->logger->info('Sending "User created" response', callerIndex: CURRENT_CALLER_INDEX);
 		$this->setResponseData(['message' => 'User created succesfully'], true, 201);
+		$this->sendResponse();
+	}
+
+	public function userExists(string $takenParam) : void{
+
+		$this->logger->info("Sending \"$takenParam already taken\" response", callerIndex: CURRENT_CALLER_INDEX);
+		$this->setResponseData(['message' => "$takenParam already taken"], false, 422);
 		$this->sendResponse();
 	}
 
@@ -221,13 +220,22 @@ trait UserManagementResponseHandler
 /**
  * Class AllResponseHandler
  *
- * This class extends the ResponseHandler class and is responsible for handling
+ * This class extends the BaseResponseHandler class and is responsible for handling
  * all types of responses within the application. It provides methods and logic
  * to process and manage responses effectively.
  *
  * @package App\Utils
  */
-class AllResponseHandler extends ResponseHandler
+class AllResponseHandler extends BaseResponseHandler
 {
 	use GenericResponseHandler, UserManagementResponseHandler;
+
+	private static ?AllResponseHandler $instance = null;
+	
+	public static function getInstance(){
+		if (self::$instance == null){
+			self::$instance = new AllResponseHandler();
+		}
+		return self::$instance;
+	}
 }

@@ -16,7 +16,7 @@ require_once UTILS . '/LogHandler.php';
  * LogHandler object
  * @var LogHandler
  */
-$logger = new LogHandler(LOG_FILE_PATH);
+$logger = LogHandler::getInstance();
 $logger->info("Server Started");
 
 // Include database model
@@ -33,7 +33,7 @@ $request = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
  * Database object
  * @var Database
  */
-$db = new Database();
+$db = Database::getInstance();
 /**
  * Database connection
  * @var mysqli
@@ -43,5 +43,3 @@ $conn = $db->getConn();
 // Redirects all future duties to the Router
 require CONTROLLERS . '/Router.php';
 
-// Closes db connection
-$conn->close();
