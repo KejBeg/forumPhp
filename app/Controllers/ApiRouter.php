@@ -10,14 +10,25 @@ require UTILS . '/ResponseHandler.php';
  * @var AllResponseHandler
  * Used for standardized response handling
  */
-$responseHandler = new AllResponseHandler(logger: $logger);
+$responseHandler = new AllResponseHandler();
 
 if ($_SERVER['CONTENT_TYPE'] === 'application/json') {
-	$json = file_get_contents('php://input');
-	$_POST = json_decode($json, true);
+	$jsonString = file_get_contents('php://input');
+	$jsonArray = json_decode($jsonString, false);
+} else {
+	$responseHandler->serverError();
+	exit;
 }
 
-if ($request == '/api/login') {
-} else if ($request == '/api/register') {
-	require USER_MANAGEMENT . '/RegisterController.php';
+switch ($request) {
+	case '/api/login':
+		break;
+	case '/api/register':
+		require_once USER_MANAGEMENT . '/RegisterController.php';
+		$controller = new RegisterController($jsonArray);
+		$controller->register();
+		break;
+	default:
+		$responseHandler->serverError();
+		break;
 }

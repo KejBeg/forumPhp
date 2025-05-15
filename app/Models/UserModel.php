@@ -1,17 +1,21 @@
 <?php
 class User
 {
-	private mysqli $dbCon;
+	private ?Database $db = null;
+	private ?PDO $dbConn = null;
+	public ?string $error = null;
+	public ?string $errno = null;
 	/**
 	 * @var LogHandler $logger
 	 * A logger instance used for handling logging operations within the ResponseHandler utility.
 	 */
 	private LogHandler $logger;
 
-	public function __construct(mysqli $dbCon, LogHandler $logger)
+	public function __construct()
 	{
-		$this->dbCon = $dbCon;
-		$this->logger = $logger;
+		$this->db = Database::getInstance();
+		$this->dbConn = $this->db->getConn();
+		$this->logger = LogHandler::getInstance();
 	}
 
 	public function hashPassword(string $password)
@@ -24,19 +28,23 @@ class User
 
 		$passwordHash = $this->hashPassword($password);
 
-		$stmt = $this->dbCon->prepare(
-			"INSERT INTO users(username, password_hash, email, gender) VALUES(?, ?, ?, ?)"
+		$stmt = $this->dbConn->prepare(
+			"INSERT INTO users(username, password_hash, email, gender) VALUES(:username, :passwordHash, :email, :gender)"
 		);
 
-		$stmt->bind_param('ssss', $username, $passwordHash, $email, $gender);
+		$stmt->bindParam(':username', $username);
+		$stmt->bindParam(':passwordHash', $passwordHash);
+		$stmt->bindParam(':email', $email);
+		$stmt->bindParam(':gender', $gender);
 
-
-		if ($stmt->execute()) {
-			$stmt->close();
-		} else {
-			$error = $stmt->error;
-			$stmt->close();
-			throw new Exception("Failed to create user: " . $error);
+		try {
+			$stmt->execute();
+			return true;
+		} catch (PDOException $e) {
+			$this->error = $e->getMessage();
+			$this->errno = $e->getCode();
+			$this->logger->error($this->error);
+			return false;
 		}
 	}
 }

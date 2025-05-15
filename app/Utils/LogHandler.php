@@ -12,13 +12,21 @@ enum LogLevel: string
 class LogHandler
 {
 	private ?string $filePath = null;
+	private static ?LogHandler $instance = null;
 
-	public function __construct(string $filePath)
+	private function __construct()
 	{
-		$this->filePath = $filePath;
+		$this->filePath = LOG_FILE_PATH;
 	}
 
-	public function log(string $message, LogLevel $level = LogLevel::INFO, int $callerIndex =  DEFAULT_CALLER_INDEX)
+	  public static function getInstance() {
+		if (self::$instance == null){
+			self::$instance = new LogHandler();
+		}
+        return self::$instance;
+    }
+
+	public function log(string $message, LogLevel $level = LogLevel::INFO, int $callerIndex =  DEFAULT_CALLER_INDEX): void
 	{
 
 		$backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
@@ -38,22 +46,22 @@ class LogHandler
 		file_put_contents($this->filePath, $logMessage, FILE_APPEND);
 	}
 
-	public function info(string $message, int $callerIndex =  DEFAULT_CALLER_INDEX)
+	public function info(string $message, int $callerIndex =  DEFAULT_CALLER_INDEX): void
 	{
 		$this->log($message, LogLevel::INFO, callerIndex: $callerIndex);
 	}
 
-	public function warning(string $message, int $callerIndex =  DEFAULT_CALLER_INDEX)
+	public function warning(string $message, int $callerIndex =  DEFAULT_CALLER_INDEX): void
 	{
 		$this->log($message, LogLevel::WARNING, callerIndex: $callerIndex);
 	}
 
-	public function error(string $message, int $callerIndex =  DEFAULT_CALLER_INDEX)
+	public function error(string $message, int $callerIndex =  DEFAULT_CALLER_INDEX): void
 	{
 		$this->log($message, LogLevel::ERROR, callerIndex: $callerIndex);
 	}
 
-	public function debug(string $message, int $callerIndex =  DEFAULT_CALLER_INDEX)
+	public function debug(string $message, int $callerIndex =  DEFAULT_CALLER_INDEX): void
 	{
 		$this->log($message, LogLevel::DEBUG, callerIndex: $callerIndex);
 	}
