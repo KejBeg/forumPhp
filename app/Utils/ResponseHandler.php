@@ -53,9 +53,9 @@ class BaseResponseHandler
 	/**
 	 * Sets the response data for the application.
 	 *
-	 * @param array $data The data to be included in the response.
-	 * @param bool $successStatus Indicates whether the response represents a successful operation.
-	 * @param int $statusCode The HTTP status code to be associated with the response.
+	 * @param array $data          The data to be included in the response.
+	 * @param bool  $successStatus Indicates whether the response represents a successful operation.
+	 * @param int   $statusCode    The HTTP status code to be associated with the response.
 	 *
 	 * @return void
 	 */
@@ -79,10 +79,12 @@ class BaseResponseHandler
 		header('Content-Type: application/json');
 		http_response_code($this->statusCode ?? 200);
 
-		$json = json_encode([
-			'success' => $this->success,
-			'data' => $this->data,
-		]);
+		$json = json_encode(
+			[
+				'success' => $this->success,
+				'data' => $this->data,
+			]
+		);
 
 		if ($json === false) {
 			http_response_code(500);
@@ -166,17 +168,25 @@ trait UserManagementResponseHandler
 	 *
 	 * @return void
 	 */
-	public function userCreated(): void
+	public function userCreated($jwt): void
 	{
 		$this->logger->info('Sending "User created" response', callerIndex: CURRENT_CALLER_INDEX);
-		$this->setResponseData(['message' => 'User created succesfully'], true, 201);
+		$this->setResponseData(['message' => 'User created succesfully', 'access_token' => $jwt], true, 201);
 		$this->sendResponse();
 	}
 
-	public function userExists(string $takenParam) : void{
+	public function userExists(string $takenParam): void
+	{
 
 		$this->logger->info("Sending \"$takenParam already taken\" response", callerIndex: CURRENT_CALLER_INDEX);
 		$this->setResponseData(['message' => "$takenParam already taken"], false, 422);
+		$this->sendResponse();
+	}
+
+	public function userNotFound(): void
+	{
+		$this->logger->info('Sending "User not found" response', callerIndex: CURRENT_CALLER_INDEX);
+		$this->setResponseData(['message' => 'User not found'], false, 404);
 		$this->sendResponse();
 	}
 
@@ -215,6 +225,34 @@ trait UserManagementResponseHandler
 		$this->setResponseData(['message' => 'Incorrect password format was used'], false, 422);
 		$this->sendResponse();
 	}
+
+	public function accessTokenInvalid(): void
+	{
+		$this->logger->info('Sending "Access token invalid" response', callerIndex: CURRENT_CALLER_INDEX);
+		$this->setResponseData(['message' => 'Access token is invalid'], false, 401);
+		$this->sendResponse();
+	}
+
+	public function accessTokenValid(string $name, string $email, string $role): void
+	{
+		$this->logger->info('Sending "Access token valid" response', callerIndex: CURRENT_CALLER_INDEX);
+		$this->setResponseData(['message' => 'Access token is valid', 'name' => $name, 'email' => $email, 'role' => $role], true, 200);
+		$this->sendResponse();
+	}
+
+	public function invalidCredentials(): void
+	{
+		$this->logger->info('Sending "Invalid credentials" response', callerIndex: CURRENT_CALLER_INDEX);
+		$this->setResponseData(['message' => 'Invalid credentials'], false, 401);
+		$this->sendResponse();
+	}
+
+	public function userLoggedIn(string $jwt): void
+	{
+		$this->logger->info('Sending "User logged in" response', callerIndex: CURRENT_CALLER_INDEX);
+		$this->setResponseData(['message' => 'User logged in successfully', 'access_token' => $jwt], true, 200);
+		$this->sendResponse();
+	}
 }
 
 /**
@@ -231,9 +269,10 @@ class AllResponseHandler extends BaseResponseHandler
 	use GenericResponseHandler, UserManagementResponseHandler;
 
 	private static ?AllResponseHandler $instance = null;
-	
-	public static function getInstance(){
-		if (self::$instance == null){
+
+	public static function getInstance()
+	{
+		if (self::$instance == null) {
 			self::$instance = new AllResponseHandler();
 		}
 		return self::$instance;

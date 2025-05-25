@@ -39,6 +39,12 @@ const LOG_FILE_PATH = LOG_FILE_DIR . '/' . LOG_FILE_NAME;
 /** Recognized genders */
 const GENDERS = ['male', 'female'];
 
+/** Standard JWT header */
+const JWT_HEADER = [
+		'alg' => 'HS256',
+		'typ' => 'JWT'
+];
+
 // Load the composer
 require ROOT . '/vendor/autoload.php';
 

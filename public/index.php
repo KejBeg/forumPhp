@@ -34,6 +34,7 @@ $request = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
  * @var Database
  */
 $db = Database::getInstance();
+
 /**
  * Database connection
  * @var mysqli

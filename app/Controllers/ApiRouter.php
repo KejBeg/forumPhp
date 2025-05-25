@@ -13,20 +13,35 @@ require UTILS . '/ResponseHandler.php';
 $responseHandler = new AllResponseHandler();
 
 if ($_SERVER['CONTENT_TYPE'] === 'application/json') {
-	$jsonString = file_get_contents('php://input');
-	$jsonArray = json_decode($jsonString, false);
+	$jsonArray = (array) json_decode(file_get_contents('php://input'), false);
 } else {
 	$responseHandler->serverError();
 	exit;
 }
 
+$accessToken = $_SERVER['HTTP_AUTHORIZATION'] ?? null;
+if ($accessToken) {
+	$accessToken = str_replace('Bearer ', '', $accessToken);
+}
+
+
+$logger->info('API called, request: ' . $_SERVER['REQUEST_URI'] . ', method: ' . $_SERVER['REQUEST_METHOD']);
+
 switch ($request) {
-	case '/api/login':
-		break;
 	case '/api/register':
 		require_once USER_MANAGEMENT . '/RegisterController.php';
-		$controller = new RegisterController($jsonArray);
+		$controller = new RegisterController(requestJson: $jsonArray);
 		$controller->register();
+		break;
+	case '/api/login':
+		require_once USER_MANAGEMENT . '/LoginController.php';
+		$controller = new LoginController(requestJson: $jsonArray);
+		$controller->login();
+		break;
+	case '/api/check':
+		require_once USER_MANAGEMENT . '/CheckController.php';
+		$controller = new CheckController(accessToken: $accessToken);
+		$controller->Check();
 		break;
 	default:
 		$responseHandler->serverError();
