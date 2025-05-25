@@ -22,13 +22,12 @@ $title = $_SERVER['APP_NAME'];
 	<input type='submit' value='Register' name='register'>
 </form>
 <script type="module">
-	import ApiHandler from '/public/js/ApiHandler.js';
 
-	document.querySelector('#register-form').addEventListener('submit', (e) => {
+	document.querySelector('#register-form').addEventListener('submit', async (e) => {
 		e.preventDefault();
 
 		const form = e.target;
-		let apiHandler = new ApiHandler(
+		let registerHandler = new ApiHandler(
 			'/api/register', {
 				email: form.email.value,
 				name: form.name.value,
@@ -38,7 +37,12 @@ $title = $_SERVER['APP_NAME'];
 			'POST'
 		);
 
-		apiHandler.send();
+		await registerHandler.send();
+
+		if (registerHandler.resData.success) {
+			document.cookie = `access_token=${registerHandler.resData.data.access_token}; path=/; max-age=900; secure; samesite=strict`;
+			window.location.href = '/';
+		}
 	});
 </script>
 

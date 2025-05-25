@@ -1,39 +1,44 @@
+
 class ApiHandler {
-	constructor(url, data = {}, method = 'POST', headers = {}) {
+	/**
+	 * @param {string} url - The URL to send the request to.
+	 * @param {object} reqData - The data to send in the request body.
+	 * @param {string} method - The HTTP method to use (default is 'POST').
+	 * @param {object} headers - Additional headers to include in the request.
+	 */
+	constructor(url, reqData = {}, method = "POST", headers = {}) {
 		this.url = url;
-		this.data = data;
+		this.reqData = reqData;
 		this.method = method;
 		this.headers = {
-			'Content-Type': 'application/json',
+			"Content-Type": "application/json",
 			...headers,
 		};
+
+
+		if (isTokenPresent()) {
+			this.headers["Authorization"] = `Bearer ${getToken()}`;
+		}
 	}
 
+
 	async send() {
-		try {
-			const options = {
-				method: this.method,
-				headers: this.headers,
-				body: JSON.stringify(this.data),
-			};
+		const options = {
+			method: this.method,
+			headers: this.headers,
+			body: JSON.stringify(this.reqData),
+		};
 
-			this.response = await fetch(this.url, options);
+		this.response = await fetch(this.url, options);
 
-			if (!this.response.ok) {
-				throw new Error('An error occured during register process');
-			}
+		this.resData = await this.response.json();
 
-			this.data = await this.response.json();
-
-			if (!this.data.success) {
-				throw new Error(this.data.message);
-			}
-		} catch (error) {
-			document.querySelector('#error').textContent = error;
-			console.log(`API Error: ${error}`);
+		let errorElement = document.querySelector("#error");
+		if (this.resData.success) {
+			errorElement.innerHTML = "";
+		} else {
+			errorElement.innerHTML = this.resData.message;
 		}
 	}
 }
-
-export default ApiHandler;
 

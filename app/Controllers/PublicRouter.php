@@ -2,7 +2,6 @@
 
 $publicRequest = substr($request, 1);
 
-
 // Checks whether public resource matches the public path
 if (strpos(realpath($publicRequest), realpath(PUBLIC_DIR)) !== 0) {
 	$logger->info("Requested public resource not found");

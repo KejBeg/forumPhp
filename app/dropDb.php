@@ -3,7 +3,7 @@ require_once 'bootstrap.php';
 
 require MODELS . "/database.php";
 
-$db = new Database();
+$db = Database::getInstance();
 
 $conn = $db->getConn();
 
@@ -19,4 +19,3 @@ $conn->query("DROP TABLE IF EXISTS users;");
 // Re-enable foreign key checks
 $conn->query("SET FOREIGN_KEY_CHECKS = 1;");
 
-$conn->close();
