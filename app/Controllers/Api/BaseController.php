@@ -11,7 +11,7 @@ class BaseController
 	protected LogHandler $logger;
 	protected AllResponseHandler $responseHandler;
 	protected ?array $requestJson = null;
-	protected ?string $accessToken = null;
+	public ?string $accessToken = null;
 
 	public function __construct()
 	{

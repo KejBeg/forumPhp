@@ -190,6 +190,13 @@ trait UserManagementResponseHandler
 		$this->sendResponse();
 	}
 
+	public function allUsersRetrieved(array $users): void
+	{
+		$this->logger->info('Sending "All users retrieved" response', callerIndex: CURRENT_CALLER_INDEX);
+		$this->setResponseData(['message' => 'All users retrieved successfully', 'users' => $users], true, 200);
+		$this->sendResponse();
+	}
+
 	/**
 	 * Handles the response for an incorrect email format.
 	 *
@@ -255,6 +262,58 @@ trait UserManagementResponseHandler
 	}
 }
 
+trait MessageManagementResponseHandler
+{
+	/**
+	 * Handles the response for a successfully created post.
+	 *
+	 * @param object $post The post object that was created.
+	 *
+	 * @return void
+	 */
+	public function messageCreated(): void
+	{
+		$this->logger->info('Sending "Post created" response', callerIndex: CURRENT_CALLER_INDEX);
+		$this->setResponseData(['message' => 'Post created successfully'], true, 201);
+		$this->sendResponse();
+	}
+
+	public function messagesRetrieved(array $messages): void
+	{
+		$this->logger->info('Sending "Messages retrieved" response', callerIndex: CURRENT_CALLER_INDEX);
+		$this->setResponseData(['message' => 'Messages retrieved succesfully', 'messages' => $messages], true, 200);
+		$this->sendResponse();
+	}
+
+	public function messageEditted(): void
+	{
+		$this->logger->info('Sending "Message edited" response', callerIndex: CURRENT_CALLER_INDEX);
+		$this->setResponseData(['message' => 'Message edited successfully'], true, 200);
+		$this->sendResponse();
+	}
+
+	public function forbiddenEdit(): void
+	{
+		$this->logger->info('Sending "Forbidden edit" response', callerIndex: CURRENT_CALLER_INDEX);
+		$this->setResponseData(['message' => 'You are not allowed to edit this message'], false, 403);
+		$this->sendResponse();
+	}
+
+	public function messageDeleted(): void
+	{
+		$this->logger->info('Sending "Message deleted" response', callerIndex: CURRENT_CALLER_INDEX);
+		$this->setResponseData(['message' => 'Message deleted successfully'], true, 200);
+		$this->sendResponse();
+	}
+
+	public function forbiddenDelete(): void
+	{
+		$this->logger->info('Sending "Forbidden delete" response', callerIndex: CURRENT_CALLER_INDEX);
+		$this->setResponseData(['message' => 'You are not allowed to delete this message'], false, 403);
+		$this->sendResponse();
+	}
+}
+
 /**
  * Class AllResponseHandler
  *
@@ -266,7 +325,7 @@ trait UserManagementResponseHandler
  */
 class AllResponseHandler extends BaseResponseHandler
 {
-	use GenericResponseHandler, UserManagementResponseHandler;
+	use GenericResponseHandler, UserManagementResponseHandler,MessageManagementResponseHandler;
 
 	private static ?AllResponseHandler $instance = null;
 

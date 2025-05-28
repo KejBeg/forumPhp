@@ -12,44 +12,17 @@ $db = Database::getInstance();
 
 $conn = $db->getConn();
 
-$categories = '
-CREATE TABLE IF NOT EXISTS categories 
-(
-	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-	name VARCHAR(255) NOT NULL,		
-	description VARCHAR(255),
-	slug VARCHAR(255) UNIQUE
-);
-';
-
 $messages = '
 CREATE TABLE IF NOT EXISTS messages 
 (
 	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
 	content TEXT NOT NULL,
 	author_id INT UNSIGNED NOT NULL,
-	post_id INT UNSIGNED NOT NULL,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP NULL DEFAULT NULL,
-	FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE,
-	FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
+	FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE
 )
-';
-
-$posts = '
-CREATE TABLE IF NOT EXISTS posts
-(
-	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-	name VARCHAR(255) NOT NULL,
-	author_id INT UNSIGNED NOT NULL,
-	category_id INT UNSIGNED NOT NULL,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	deleted_at TIMESTAMP NULL DEFAULT NULL,
-	FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE,
-	FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
-);
 ';
 
 $users = '
@@ -69,8 +42,6 @@ CREATE TABLE IF NOT EXISTS users
 ';
 
 $conn->query($users);
-$conn->query($categories);
-$conn->query($posts);
 $conn->query($messages);
 
 $logger->info("Database tables created");

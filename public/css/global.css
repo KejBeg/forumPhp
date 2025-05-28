@@ -1,0 +1,8 @@
+* {
+margin: 0;	
+padding: 0;
+--navbar-height: 60px; 
+--addMessage-height: 60px;
+		--error-height: 30px;
+--messageList-height: calc(100vh - var(--navbar-height) - var(--addMessage-height) - var(--error-height));: 
+	}

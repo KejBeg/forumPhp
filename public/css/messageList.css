@@ -1,0 +1,66 @@
+.message-list-container {
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    overflow-y: auto;
+    height: var(--messageList-height);
+}
+
+.message-list-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.message-list-container li {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.message-list-container li:last-child {
+    border-bottom: none;
+}
+
+.message-list-container li span {
+    flex-grow: 1;
+    word-break: break-word;
+}
+
+.message-list-container button {
+    background-color: #ddd;
+    border: none;
+    color: #333;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: background-color 0.2s;
+}
+
+.message-list-container button:hover {
+    background-color: #ccc;
+}
+
+.message-list-container .edit-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.message-list-container .edit-button:hover {
+    background-color: #3e8e41;
+}
+
+.message-list-container .delete-button {
+    background-color: #f44336;
+    color: white;
+}
+
+.message-list-container .delete-button:hover {
+    background-color: #da190b;
+}
