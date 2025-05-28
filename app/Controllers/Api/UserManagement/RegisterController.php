@@ -28,6 +28,8 @@ class RegisterController extends UserManagementController
     {
         $this->verifyMethod();
         $this->checkRequiredInputs();
+        $this->requestJson['name'] = strtolower(trim($this->requestJson['name']));
+        $this->requestJson['email'] = strtolower(trim($this->requestJson['email']));
         $this->checkGender();
         $this->checkMail();
         $this->checkUsername();

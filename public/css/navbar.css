@@ -1,0 +1,35 @@
+.navbar {
+    display: grid;
+    grid-template-columns: auto auto; 
+    justify-content: space-between; 
+    align-items: center; 
+    background-color: #333;
+    color: white;
+		padding: 0 20px;
+    font-family: sans-serif;
+	height: var(--navbar-height);
+}
+
+#navbar-links {
+    display: grid;
+    grid-auto-flow: column; 
+    gap: 20px; 
+}
+
+#profile-links {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 20px;
+}
+
+#navbar-links a, #profile-links a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius-bottom: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#navbar-links a:hover, #profile-links a:hover {
+    background-color: #555;
+}

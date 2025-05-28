@@ -16,6 +16,7 @@ class LoginController extends UserManagementController
     {
         $this->verifyMethod();
         $this->checkRequiredInputs();
+        $this->requestJson['name'] = strtolower(trim($this->requestJson['name']));
         $user = new User();
         $userObject = $user->getUserByUsername($this->requestJson['name']);
 

@@ -43,6 +43,32 @@ switch ($request) {
 		$controller = new CheckController(accessToken: $accessToken);
 		$controller->Check();
 		break;
+	case '/api/getMessages':
+		require_once  MESSAGE_MANAGEMENT . '/GetMessagesController.php';
+		$controller = new GetMessagesController();
+		$controller->getMessages();
+		break;
+	case '/api/addMessage':
+		require_once MESSAGE_MANAGEMENT . '/AddMessageController.php';
+		$controller = new AddMessageController(requestJson: $jsonArray, accessToken: $accessToken);
+		$controller->addMessage();
+		break;
+	case '/api/editMessage':
+		require_once MESSAGE_MANAGEMENT . '/EditMessageController.php';
+		$controller = new EditMessageController(requestJson: $jsonArray, accessToken: $accessToken);
+		$controller->editMessage();
+		break;
+	case '/api/deleteMessage':
+		require_once MESSAGE_MANAGEMENT . '/DeleteMessageController.php';
+		$controller = new DeleteMessageController(requestJson: $jsonArray, accessToken: $accessToken);
+		$controller->deleteMessage();
+		break;
+
+	case '/api/getAllUsers':
+		require_once USER_MANAGEMENT . '/GetAllUsersController.php';
+		$controller = new GetAllUsersController();
+		$controller->getAllUsers();
+		break;
 	default:
 		$responseHandler->serverError();
 		break;

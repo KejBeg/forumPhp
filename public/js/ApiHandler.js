@@ -37,7 +37,8 @@ class ApiHandler {
 		if (this.resData.success) {
 			errorElement.innerHTML = "";
 		} else {
-			errorElement.innerHTML = this.resData.message;
+			errorElement.textContent = this.resData.data.message;
+			errorElement.style.backgroundColor = "red";
 		}
 	}
 }

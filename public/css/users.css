@@ -1,0 +1,42 @@
+.user-list-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.user-list-container table {
+    border-collapse: collapse; 
+    width: 100%;
+    margin: 1em 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px; 
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.user-list-container thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.user-list-container th,
+.user-list-container td {
+    padding: 12px 15px;
+}
+
+.user-list-container tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.user-list-container tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.user-list-container tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.user-list-container tbody tr:hover {
+    font-weight: bold;
+    color: #009879;
+}

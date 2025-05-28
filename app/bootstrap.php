@@ -27,6 +27,8 @@ const COMPONENTS = VIEWS . '/components';
 const API = CONTROLLERS . '/Api';
 /** User Management of API directory */
 const USER_MANAGEMENT = API . '/UserManagement';
+/** Post Management of API directory */
+const MESSAGE_MANAGEMENT = API . '/MessageManagement';
 
 // Logger constants
 /** Directory of log file*/

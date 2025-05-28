@@ -1,0 +1,27 @@
+#add-message-container {
+	height: var(--addMessage-height);
+	padding: 0;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+}
+
+#addMessage-form {
+    display: grid;
+	width: 100%;
+		height: 100%;
+    grid-template-columns: 5fr 1fr;
+    background-color: #fafafa;
+}
+
+
+#addMessage-form input[type="submit"] {
+    background-color: #4CAF50;
+    transition: background-color 0.3s;
+}
+
+#addMessage-form input[type="submit"]:hover {
+    background-color: #3e8e41;
+}

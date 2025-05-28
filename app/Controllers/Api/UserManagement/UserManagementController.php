@@ -4,7 +4,7 @@ require_once API . '/BaseController.php';
 class UserManagementController extends BaseController
 {
 
-    protected ?array $jwtArray = null;
+    public ?array $jwtArray = null;
 
     /**
      * Checks the gender
@@ -130,7 +130,6 @@ class UserManagementController extends BaseController
         'signature' => $signature,
         'expectedSignature' => $expectedSignature
         ];
-
     }
 
     public function setAccessToken(int $userId): void
