@@ -40,7 +40,7 @@ $cssFiles = [
             await loginHandler.send();
 
             if (loginHandler.resData.success) {
-                document.cookie = `access_token=${loginHandler.resData.data.access_token}; path=/; max-age=900; secure; samesite=strict`;
+                document.cookie = `access_token=${loginHandler.resData.data.access_token}; path=/; max-age=900; samesite=strict`;
                 window.location.href = '/';
             }
         });
