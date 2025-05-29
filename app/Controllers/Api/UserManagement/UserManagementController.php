@@ -104,7 +104,7 @@ class UserManagementController extends BaseController
         $encodedHeader = $this->base64url_encode(json_encode($header));
         $encodedPayload = $this->base64url_encode(json_encode($payload));
 
-        $signature = hash_hmac('sha256', "$encodedHeader.$encodedPayload", $_SERVER['JWT_SECRET'], true);
+        $signature = hash_hmac('sha256', "$encodedHeader.$encodedPayload",JWT_SECRET, true);
         $encodedSignature = $this->base64url_encode($signature);
 
         $jwt = "$encodedHeader.$encodedPayload.$encodedSignature";
@@ -120,7 +120,7 @@ class UserManagementController extends BaseController
 
         $signature = $this->base64UrlDecode($parts[2]);
 
-        $expectedSignature = hash_hmac('sha256', "$parts[0].$parts[1]", $_SERVER['JWT_SECRET'], true);
+        $expectedSignature = hash_hmac('sha256', "$parts[0].$parts[1]", JWT_SECRET, true);
 
 
 

@@ -20,7 +20,7 @@ TAIL_PID=$!
 php app/setup.php
 
 # Starts the server, dumps standard php logs to null
-php -S localhost:8000 public/index.php  2>&1 &
+php -S localhost:8000 index.php  2>&1 &
 SERVER_PID=$!
 
 trap "kill $SERVER_PID $TAIL_PID" INT

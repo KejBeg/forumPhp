@@ -66,7 +66,7 @@ switch ($request) {
 
 	case '/api/getAllUsers':
 		require_once USER_MANAGEMENT . '/GetAllUsersController.php';
-		$controller = new GetAllUsersController();
+		$controller = new GetAllUsersController(requestJson: $jsonArray);
 		$controller->getAllUsers();
 		break;
 	default:

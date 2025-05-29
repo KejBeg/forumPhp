@@ -47,9 +47,3 @@ const JWT_HEADER = [
 		'typ' => 'JWT'
 ];
 
-// Load the composer
-require ROOT . '/vendor/autoload.php';
-
-// Load dotenv
-$dotenv = Dotenv\Dotenv::createImmutable(ROOT);
-$dotenv->load();

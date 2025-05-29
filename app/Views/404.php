@@ -1,6 +1,6 @@
 
 <?php
-$title = $_SERVER['APP_NAME'];
+$title = APP_NAME;
 ?>
 
 <?php require COMPONENTS . '/head.php' ?>

@@ -116,7 +116,7 @@ class Message
 				m.id
 			FROM messages m
 			JOIN users u ON m.author_id = u.id
-			ORDER BY m.created_at ASC;
+			ORDER BY m.created_at DESC;
 				"
             );
             $stmt->execute();

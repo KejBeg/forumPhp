@@ -7,12 +7,12 @@ class Database
 	private function __construct()
 	{
 		try {
-			$dsn = "mysql:host={$_SERVER['DB_HOST']};port={$_SERVER['DB_PORT']};dbname={$_SERVER['DB_DATABASE']};charset=utf8mb4";
+			$dsn = 'mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_DATABASE . ';charset=utf8mb4';
 
 			$this->conn = new PDO(
 				$dsn,
-				username: $_SERVER['DB_USER'],
-				password: $_SERVER['DB_PASS']
+				username: DB_USER,
+				password: DB_PASS
 
 			);
 
