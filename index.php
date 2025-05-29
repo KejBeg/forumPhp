@@ -6,7 +6,8 @@
  */
 
 // Includes basic constants
-require_once __DIR__ . '/../app/bootstrap.php';
+require_once __DIR__ . '/app/bootstrap.php';
+require_once APP . '/env.php';
 
 // Includes LogHandler Class
 require_once UTILS . '/LogHandler.php';

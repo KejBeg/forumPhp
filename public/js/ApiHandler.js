@@ -36,6 +36,7 @@ class ApiHandler {
 		let errorElement = document.querySelector("#error");
 		if (this.resData.success) {
 			errorElement.innerHTML = "";
+			errorElement.style.backgroundColor = "transparent";
 		} else {
 			errorElement.textContent = this.resData.data.message;
 			errorElement.style.backgroundColor = "red";

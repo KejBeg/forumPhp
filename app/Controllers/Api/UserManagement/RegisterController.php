@@ -33,7 +33,7 @@ class RegisterController extends UserManagementController
         $this->checkGender();
         $this->checkMail();
         $this->checkUsername();
-        $this->checkPassword();
+        /* $this->checkPassword(); */
         $this->createUser();
     }
 

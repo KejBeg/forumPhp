@@ -1,5 +1,6 @@
 <?php
 require_once 'bootstrap.php';
+require_once 'env.php';
 
 require MODELS . "/database.php";
 
@@ -20,8 +21,7 @@ CREATE TABLE IF NOT EXISTS messages
 	author_id INT UNSIGNED NOT NULL,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	deleted_at TIMESTAMP NULL DEFAULT NULL,
-	FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE
+	FOREIGN KEY (author_id) REFERENCES users(id) 
 )
 ';
 
@@ -33,10 +33,6 @@ CREATE TABLE IF NOT EXISTS users
 	password_hash VARCHAR(512) NOT NULL,
 	email VARCHAR(255) NOT NULL UNIQUE,
 	gender ENUM ("male", "female") NOT NULL,
-	description TEXT,
-	role ENUM("admin", "moderator", "user") NOT NULL DEFAULT "user",
-	last_login TIMESTAMP NULL DEFAULT NULL DEFAULT CURRENT_TIMESTAMP,
-	is_active BOOLEAN DEFAULT TRUE,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ';

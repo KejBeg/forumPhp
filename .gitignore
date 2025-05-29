@@ -5,6 +5,7 @@ vendor/
 
 # Dotenv
 .env
+public/env.php
 
 # Useless files
 *.session.sql
